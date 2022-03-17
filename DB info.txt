@@ -1,0 +1,1 @@
+Создание БД по имени: automated_accounting
