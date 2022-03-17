@@ -1,3 +1,18 @@
+#automated_accounting
+
+Used technologies
+______________________________________________
+- Java Core
+- JWT
+- Rest API
+- Spring Boot Security
+- Spring Boot Data JPA
+- Spring Boot Web
+- Spring Boot Tomcat
+- Maven
+- Travis C.I.
+
+
 Что нужно сделать
 
 Реализовать приложение для автоматизации учёта носков на складе магазина. Кладовщик должен иметь возможность:
