@@ -1,5 +1,7 @@
 #automated_accounting
 
+[![Build Status](https://app.travis-ci.com/SlartiBartFast-art/automated_accounting.svg?branch=main)](https://app.travis-ci.com/SlartiBartFast-art/automated_accounting)
+
 Used technologies
 ______________________________________________
 - Java Core

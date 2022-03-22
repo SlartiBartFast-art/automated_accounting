@@ -25,12 +25,45 @@ public class SockService {
         return repository.findAll();
     }
 
+    /**
+     * Найти по параметру цвет и % хлопка и увеличить на кол-во единиц Quantity,
+     * Сохранить сущность в БД согласно указанных параметров
+     *
+     * @param sock Модель Sock
+     * @return сохраненная сущность Sock c увеличенным числом пар
+     */
+    public Sock save(Sock sock) {
+        var rsl = repository.findByColorAndCottonPartWithin(sock.getColor(), sock.getCottonPart());
+        var count = rsl.getQuantity() + sock.getQuantity();
+        rsl.setQuantity(count);
+        return repository.save(rsl);
+    }
+
+    /**
+     * Найти по параметрам color and cottonPart
+     *  и уменьшить количество единиц товара(Quantity) согласно заданного параметра
+     * @param sock сущность
+     * @return Sock entity from DB
+     */
+    public Sock reduceSockQuantity(Sock sock) {
+        var rsl = repository.findByColorAndCottonPartWithin(sock.getColor(), sock.getCottonPart());
+        var count = rsl.getQuantity() - sock.getQuantity();
+        rsl.setQuantity(count);
+        return repository.save(rsl);
+    }
+
+    /**
+     * найти по ID
+     * @param id
+     * @return
+     */
     public Optional<Sock> findById(int id) {
         LOGGER.info("ID->: {}", repository.findById(id).get());
         return repository.findById(id);
     }
 
     /**
+     * найти согласно цвета сущности
      * color — цвет носков, строка (например, black, red, yellow);
      *
      * @param color
@@ -51,6 +84,8 @@ public class SockService {
         return repository.findAllByCottonPart(cottonPart);
     }
 
+    //TODO
+
     /**
      * получить все пару носков где color and cottonPart совпадают заданных параметрам
      *
@@ -58,14 +93,31 @@ public class SockService {
      * @param cottonPath
      * @return
      */
-    public List<Sock> findByColorAndCottonPart(String color, int cottonPath) {
-        return repository.findAllByColorAndCottonPart(color, cottonPath);
+    public Sock findByColorAndCottonPart(String color, int cottonPath) {
+        return repository.findByColorAndCottonPartWithin(color, cottonPath);
     }
 
     /**
+     * найти по 2-м параметрам и уменьшить общее колл-во на 3-й параметр
+     *
+     * @param sock запрос с объектом
+     * @return sock итоговый остаток объектов в БД
+     */
+    public Sock reducesByQuantity(Sock sock) {
+        var rsl = findByColorAndCottonPart(sock.getColor(), sock.getCottonPart());
+        LOGGER.info("what find {}", rsl);
+        var count = rsl.getQuantity() - sock.getQuantity();
+        rsl.setQuantity(count);
+        repository.save(rsl);
+        return rsl;
+    }
+
+//TODO проверить выборки по цвету < || >
+    /**
      * вернуть результат выборки по параметрам запроса UI
-     * @param color цвет
-     * @param operator оператор выборки
+     *
+     * @param color      цвет
+     * @param operator   оператор выборки
      * @param cottonPart процентное соотношение хлопка
      * @return
      */
@@ -76,7 +128,8 @@ public class SockService {
         if (operator.equals("lessThan")) {
             return repository.findAllByColorAndCottonPartAndSmaller(color, cottonPart);
         }
-        return repository.findAllByColorAndCottonPart(color, cottonPart);
+        return List.of(findByColorAndCottonPart(color, cottonPart)); // в данном случае строго ограничен цвет и %  хлопка
+//        return repository.findAllByColorAndCottonPart(color, cottonPart);
     }
 
 }
