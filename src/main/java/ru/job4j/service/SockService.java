@@ -41,7 +41,8 @@ public class SockService {
 
     /**
      * Найти по параметрам color and cottonPart
-     *  и уменьшить количество единиц товара(Quantity) согласно заданного параметра
+     * и уменьшить количество единиц товара(Quantity) согласно заданного параметра
+     *
      * @param sock сущность
      * @return Sock entity from DB
      */
@@ -54,11 +55,11 @@ public class SockService {
 
     /**
      * найти по ID
-     * @param id
-     * @return
+     *
+     * @param id int
+     * @return Optional<Sock>
      */
     public Optional<Sock> findById(int id) {
-        LOGGER.info("ID->: {}", repository.findById(id).get());
         return repository.findById(id);
     }
 
@@ -67,7 +68,7 @@ public class SockService {
      * color — цвет носков, строка (например, black, red, yellow);
      *
      * @param color
-     * @return
+     * @return List<Sock>
      */
     public List<Sock> findByColor(String color) {
         return repository.findAllByColor(color);
@@ -78,7 +79,7 @@ public class SockService {
      * целое число от 0 до 100 (например, 30, 18, 42);
      *
      * @param cottonPart
-     * @return
+     * @return List<Sock>
      */
     public List<Sock> findByCottonPart(int cottonPart) {
         return repository.findAllByCottonPart(cottonPart);
@@ -91,7 +92,7 @@ public class SockService {
      *
      * @param color
      * @param cottonPath
-     * @return
+     * @return Sock Entity
      */
     public Sock findByColorAndCottonPart(String color, int cottonPath) {
         return repository.findByColorAndCottonPartWithin(color, cottonPath);
@@ -112,14 +113,18 @@ public class SockService {
         return rsl;
     }
 
-//TODO проверить выборки по цвету < || >
     /**
+     * Возвращает общее количество носков на складе,
+     * соответствующих переданным в параметрах критериям запроса.
      * вернуть результат выборки по параметрам запроса UI
+     * operation —  moreThan, больше чем, в данном случае строго ограничен  снизу  %  хлопка + цвет
+     * operation — lessThan, меньше чем, в данном случае строго ограничен  сверху  %  хлопка + цвет
+     * operation — equal, в данном случае строго ограничен цвет и %  хлопка
      *
      * @param color      цвет
      * @param operator   оператор выборки
      * @param cottonPart процентное соотношение хлопка
-     * @return
+     * @return List<Sock> Entity
      */
     public List<Sock> findByOperator(String color, String operator, int cottonPart) {
         if (operator.equals("moreThan")) {
@@ -128,8 +133,6 @@ public class SockService {
         if (operator.equals("lessThan")) {
             return repository.findAllByColorAndCottonPartAndSmaller(color, cottonPart);
         }
-        return List.of(findByColorAndCottonPart(color, cottonPart)); // в данном случае строго ограничен цвет и %  хлопка
-//        return repository.findAllByColorAndCottonPart(color, cottonPart);
+        return List.of(findByColorAndCottonPart(color, cottonPart));
     }
-
 }

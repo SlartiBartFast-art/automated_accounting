@@ -6,6 +6,8 @@ import lombok.Data;
 public class RequestDto {
 
     private String color;
+
     private String operator;
+
     private int cottonPart;
 }

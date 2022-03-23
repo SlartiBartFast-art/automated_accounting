@@ -2,7 +2,8 @@
 
 [![Build Status](https://app.travis-ci.com/SlartiBartFast-art/automated_accounting.svg?branch=master)](https://app.travis-ci.com/SlartiBartFast-art/automated_accounting)
 
-Приложение для автоматизации учёта товаров на складе магазина. Приложение использует REST API архитектуру
+Приложение для автоматизации учёта товаров на складе магазина. 
+Приложение использует REST API архитектуру
 
 Used technologies
 ______________________________________________
