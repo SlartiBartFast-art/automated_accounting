@@ -2,7 +2,7 @@
 
 [![Build Status](https://app.travis-ci.com/SlartiBartFast-art/automated_accounting.svg?branch=master)](https://app.travis-ci.com/SlartiBartFast-art/automated_accounting)
 ![GitHub top language](https://img.shields.io/github/languages/top/SlartiBartFast-art/automated_accounting?logo=java&logoColor=red&style=plastic)
-![GitHub last commit](https://img.shields.io/github/last-commit/SlartiBartFast-art/job4j_forum?color=blue&logo=github&style=plastic)
+![GitHub last commit](https://img.shields.io/github/last-commit/SlartiBartFast-art/automated_accounting?logo=github)
 
 Приложение для автоматизации учёта товаров на складе магазина. 
 Приложение использует REST API архитектуру
@@ -30,11 +30,15 @@ _____________
 
 Список URL HTTP-методов
 ________
-
+![Image of Arch]()
  POST /api/socks/income
  Регистрирует приход носков на склад.
 
+![Image of Arch]()
+
 Параметры запроса передаются в теле запроса в виде JSON-объекта со следующими атрибутами:
+
+![Image of Arch]()
 
 -  color — цвет носков, строка (например, black, red, yellow);
 -  cottonPart — процентное содержание хлопка в составе носков, целое число от 0 до 100 (например, 30, 18, 42);
@@ -46,9 +50,16 @@ ________
 -  HTTP 400 — параметры запроса отсутствуют или имеют некорректный формат;
 -  HTTP 500 — произошла ошибка, не зависящая от вызывающей стороны (например, база данных недоступна).
 
+![Image of Arch]()
+
 POST /api/socks/outcome
 
-Регистрирует отпуск носков со склада. Здесь параметры и результаты аналогичные, но общее количество носков указанного цвета и состава не увеличивается, а уменьшается.
+Регистрирует отпуск носков со склада. Здесь параметры и результаты аналогичные,
+но общее количество носков указанного цвета и состава не увеличивается, а уменьшается.
+
+![Image of Arch]()
+
+![Image of Arch]()
 
 GET /api/socks
 
