@@ -1,6 +1,8 @@
 #automated_accounting
 
 [![Build Status](https://app.travis-ci.com/SlartiBartFast-art/automated_accounting.svg?branch=master)](https://app.travis-ci.com/SlartiBartFast-art/automated_accounting)
+![GitHub top language](https://img.shields.io/github/languages/top/SlartiBartFast-art/automated_accounting?logo=java&logoColor=red&style=plastic)
+![GitHub last commit](https://img.shields.io/github/last-commit/SlartiBartFast-art/job4j_forum?color=blue&logo=github&style=plastic)
 
 Приложение для автоматизации учёта товаров на складе магазина. 
 Приложение использует REST API архитектуру
