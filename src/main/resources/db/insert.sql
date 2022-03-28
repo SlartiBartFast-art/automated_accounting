@@ -16,3 +16,5 @@ insert into socks(color, cotton_part, quantity)
 VALUES('green', 75, 70);
 insert into socks(color, cotton_part, quantity)
 VALUES('white', 80, 180);
+insert into socks(color, cotton_part, quantity)
+VALUES('black', 10, 28);

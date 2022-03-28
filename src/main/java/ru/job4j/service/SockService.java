@@ -34,9 +34,13 @@ public class SockService {
      */
     public Sock save(Sock sock) {
         var rsl = repository.findByColorAndCottonPartWithin(sock.getColor(), sock.getCottonPart());
-        var count = rsl.getQuantity() + sock.getQuantity();
-        rsl.setQuantity(count);
-        return repository.save(rsl);
+        if (rsl.isPresent()) {
+            var tempSock = rsl.get();
+            var count = tempSock.getQuantity() + sock.getQuantity();
+            tempSock.setQuantity(count);
+            return repository.save(tempSock);
+        }
+        return repository.save(sock);
     }
 
     /**
@@ -48,9 +52,16 @@ public class SockService {
      */
     public Sock reduceSockQuantity(Sock sock) {
         var rsl = repository.findByColorAndCottonPartWithin(sock.getColor(), sock.getCottonPart());
-        var count = rsl.getQuantity() - sock.getQuantity();
-        rsl.setQuantity(count);
-        return repository.save(rsl);
+        if (rsl.isPresent()) {
+            var tempSock = rsl.get();
+            var count = tempSock.getQuantity() - sock.getQuantity();
+            tempSock.setQuantity(count);
+            if (tempSock.getQuantity() > 0) {
+                return repository.save(tempSock);
+            }
+            repository.delete(tempSock);
+        }
+        return Sock.of(null, 0, 0);
     }
 
     /**
@@ -95,7 +106,11 @@ public class SockService {
      * @return Sock Entity
      */
     public Sock findByColorAndCottonPart(String color, int cottonPath) {
-        return repository.findByColorAndCottonPartWithin(color, cottonPath);
+        var rsl = repository.findByColorAndCottonPartWithin(color, cottonPath);
+        if (rsl.isPresent()) {
+            return rsl.get();
+        }
+        return Sock.of(null, 0, 0);
     }
 
     /**

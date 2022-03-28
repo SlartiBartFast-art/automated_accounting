@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import ru.job4j.model.RequestDto;
+
 import ru.job4j.model.Sock;
 import ru.job4j.service.SockService;
 
@@ -44,19 +44,22 @@ public class SocksController {
      * @return
      */
     @GetMapping("/socks")
-    public ResponseEntity<List<Sock>> findAllLike(@RequestBody RequestDto requestDto) {
-        if (requestDto.getColor() == null
-                || requestDto.getOperator() == null
-                || requestDto.getCottonPart() == 0) {
+    public ResponseEntity<List<Sock>> findAllLike(@RequestParam(required = false) String color,
+                                                  @RequestParam(required = false) String operator,
+                                                  @RequestParam(required = false) int cottonPart
+    ) {
+        if (color == null
+                || operator == null
+                || cottonPart == 0) {
             return new ResponseEntity<>(
-                    List.of(Sock.of(requestDto.getColor(), requestDto.getCottonPart(), 0)),
+                    List.of(Sock.of(color, cottonPart, 0)),
                     HttpStatus.BAD_REQUEST
             );
         }
         var rsl = service.findByOperator(
-                requestDto.getColor(),
-                requestDto.getOperator(),
-                requestDto.getCottonPart());
+                color,
+                operator,
+                cottonPart);
         return new ResponseEntity<List<Sock>>(rsl,
                 !rsl.isEmpty() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR
         );
@@ -80,7 +83,7 @@ public class SocksController {
      * @param sock
      * @return
      */
-    @PostMapping("/income")
+    @PostMapping("/socks/income")
     public ResponseEntity<Sock> income(@RequestBody Sock sock) {
         if (sock.getColor().equals(null) || sock.getCottonPart() == 0 || sock.getQuantity() == 0) {
             return new ResponseEntity<>(
@@ -109,7 +112,7 @@ public class SocksController {
      * @param sock
      * @return
      */
-    @PostMapping("/outcome")
+    @PostMapping("/socks/outcome")
     public ResponseEntity<Sock> outcome(@RequestBody Sock sock) {
         if (sock.getColor().equals(null) || sock.getCottonPart() == 0 || sock.getQuantity() == 0) {
             return new ResponseEntity<>(
