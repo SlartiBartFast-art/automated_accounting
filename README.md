@@ -34,11 +34,11 @@ ________
  POST /api/socks/income
  Регистрирует приход носков на склад.
 
-![Image of Arch]()
+![Image of Arch](https://github.com/SlartiBartFast-art/automated_accounting/blob/master/image/Screenshot_2.jpg)
 
 Параметры запроса передаются в теле запроса в виде JSON-объекта со следующими атрибутами:
 
-![Image of Arch]()
+![Image of Arch](https://github.com/SlartiBartFast-art/automated_accounting/blob/master/image/Screenshot_3.jpg)
 
 -  color — цвет носков, строка (например, black, red, yellow);
 -  cottonPart — процентное содержание хлопка в составе носков, целое число от 0 до 100 (например, 30, 18, 42);
@@ -50,16 +50,16 @@ ________
 -  HTTP 400 — параметры запроса отсутствуют или имеют некорректный формат;
 -  HTTP 500 — произошла ошибка, не зависящая от вызывающей стороны (например, база данных недоступна).
 
-![Image of Arch]()
+![Image of Arch](https://github.com/SlartiBartFast-art/automated_accounting/blob/master/image/Screenshot_4.jpg)
 
 POST /api/socks/outcome
 
 Регистрирует отпуск носков со склада. Здесь параметры и результаты аналогичные,
 но общее количество носков указанного цвета и состава не увеличивается, а уменьшается.
 
-![Image of Arch]()
+![Image of Arch](https://github.com/SlartiBartFast-art/automated_accounting/blob/master/image/Screenshot_5.jpg)
 
-![Image of Arch]()
+![Image of Arch](https://github.com/SlartiBartFast-art/automated_accounting/blob/master/image/Screenshot_6.jpg)
 
 GET /api/socks
 
