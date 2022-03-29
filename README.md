@@ -83,6 +83,10 @@ GET /api/socks
 
 Примеры запросов:
 
+/api/socksAll
+
+![Image of Arch](https://github.com/SlartiBartFast-art/automated_accounting/blob/master/image/Screenshot_1.jpg)
+
 ![Image of Arch](https://github.com/SlartiBartFast-art/automated_accounting/blob/master/image/Screenshot_7.jpg)
 
 -  /api/socks?color=red&operator=moreThan&cottonPart=90 — должен вернуть общее количество красных носков с долей хлопка более 90%;
