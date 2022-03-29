@@ -6,6 +6,8 @@
 
 Приложение для автоматизации учёта товаров на складе магазина. 
 Приложение использует REST API архитектуру
+развернуто в облаке(Heroku)
+   - https://automated-accounting.herokuapp.com/
 
 Used technologies
 ______________________________________________
@@ -30,8 +32,11 @@ _____________
 
 Список URL HTTP-методов
 ________
+
 ![Image of Arch]()
+
  POST /api/socks/income
+
  Регистрирует приход носков на склад.
 
 ![Image of Arch](https://github.com/SlartiBartFast-art/automated_accounting/blob/master/image/Screenshot_2.jpg)
@@ -78,8 +83,16 @@ GET /api/socks
 -  HTTP 500 — произошла ошибка, не зависящая от вызывающей стороны (например, база данных недоступна).
 Примеры запросов:
 
+![Image of Arch]()
+
 -  /api/socks?color=red&operator=moreThan&cottonPart=90 — должен вернуть общее количество красных носков с долей хлопка более 90%;
--  /api/socks?color=black&operator=lessThan?cottonPart=15 — должен вернуть общее количество черных носков с долей хлопка менее 10%.
+
+![Image of Arch]()
+
+-  /api/socks?color=black&operator=lessThan&cottonPart=15 — должен вернуть общее количество черных носков с долей хлопка менее 10%.
+
+![Image of Arch]()
+
 Для хранения данных системы можно использовать любую реляционную базу данных. Схему БД желательно хранить в репозитории в любом удобном виде.
 
 Как это сделать
