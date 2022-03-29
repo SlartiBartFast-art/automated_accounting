@@ -8,6 +8,7 @@ import ru.job4j.repository.SocksRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -15,10 +16,44 @@ public class SockService {
 
     static final Logger LOGGER = LoggerFactory.getLogger(SockService.class);
 
+    private final ConcurrentHashMap<String, String> colors = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, String> operatos = new ConcurrentHashMap<>();
+
     private final SocksRepository repository;
 
     public SockService(SocksRepository socksRepository) {
         this.repository = socksRepository;
+        init();
+    }
+
+    void init() {
+        colors.put("white", "white");
+        colors.put("black", "black");
+        colors.put("red", "red");
+        colors.put("blue", "blue");
+        colors.put("green", "green");
+        colors.put("yellow", "yellow");
+        colors.put("orange", "orange");
+        colors.put("gray", "gray");
+        operatos.put("moreThan", "moreThan");
+        operatos.put("lessThan", "lessThan");
+        operatos.put("equal", "equal");
+    }
+
+    public String matchesColor(String string) {
+        String rsl = "not registered";
+        if (colors.contains(string)) {
+            return colors.get(string);
+        }
+        return rsl;
+    }
+
+    public String matchesOperator(String operator) {
+        String rsl = "not registered";
+        if (operator.contains(operator)) {
+            return operatos.get(operator);
+        }
+        return rsl;
     }
 
     public Iterable<Sock> findAll() {
@@ -95,8 +130,6 @@ public class SockService {
     public List<Sock> findByCottonPart(int cottonPart) {
         return repository.findAllByCottonPart(cottonPart);
     }
-
-    //TODO
 
     /**
      * получить все пару носков где color and cottonPart совпадают заданных параметрам

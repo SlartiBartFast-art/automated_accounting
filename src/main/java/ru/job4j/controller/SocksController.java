@@ -1,5 +1,6 @@
 package ru.job4j.controller;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import ru.job4j.model.Sock;
 import ru.job4j.service.SockService;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -44,22 +46,33 @@ public class SocksController {
      * @return
      */
     @GetMapping("/socks")
-    public ResponseEntity<List<Sock>> findAllLike(@RequestParam(required = false) String color,
-                                                  @RequestParam(required = false) String operator,
-                                                  @RequestParam(required = false) int cottonPart
+    public ResponseEntity<List<Sock>> findAllLike(@RequestParam String color,
+                                                  @RequestParam String operator,
+                                                  @RequestParam String cottonPart
     ) {
+        if (!color.equals(service.matchesColor(color))
+                || !operator.equals(service.matchesOperator(operator))
+                || !NumberUtils.isCreatable(cottonPart)
+                || cottonPart == null
+        ) {
+            return new ResponseEntity<>(
+                    List.of(Sock.of(color, 0, 0)),
+                    HttpStatus.BAD_REQUEST
+            );
+        }
         if (color == null
                 || operator == null
-                || cottonPart == 0) {
+                || Integer.parseInt(cottonPart) <= 0
+        ) {
             return new ResponseEntity<>(
-                    List.of(Sock.of(color, cottonPart, 0)),
+                    List.of(Sock.of(color, Integer.parseInt(cottonPart), 0)),
                     HttpStatus.BAD_REQUEST
             );
         }
         var rsl = service.findByOperator(
                 color,
                 operator,
-                cottonPart);
+                Integer.parseInt(cottonPart));
         return new ResponseEntity<List<Sock>>(rsl,
                 !rsl.isEmpty() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR
         );
