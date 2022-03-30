@@ -14,7 +14,6 @@ ______________________________________________
 - Java Core
 - JWT
 - Rest API
-- Spring Boot Security
 - Spring Boot Data JPA
 - Spring Boot Web
 - Spring Boot Tomcat
