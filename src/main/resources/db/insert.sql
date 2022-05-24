@@ -1,24 +1,24 @@
-insert into socks(color, cotton_part, quantity)
-VALUES('red', 40, 15);
-insert into socks(color, cotton_part, quantity)
-VALUES('red', 70, 25);
-insert into socks(color, cotton_part, quantity)
-VALUES('green', 55, 52);
-insert into socks(color, cotton_part, quantity)
-VALUES('yellow', 60, 17);
-insert into socks(color, cotton_part, quantity)
-VALUES('white', 70, 80);
-insert into socks(color, cotton_part, quantity)
-VALUES('blue', 45, 45);
-insert into socks(color, cotton_part, quantity)
-VALUES('dark', 35, 75);
-insert into socks(color, cotton_part, quantity)
-VALUES('red', 95, 25);
-insert into socks(color, cotton_part, quantity)
-VALUES('green', 75, 70);
-insert into socks(color, cotton_part, quantity)
-VALUES('white', 80, 180);
-insert into socks(color, cotton_part, quantity)
-VALUES('black', 10, 28);
-insert into socks(color, cotton_part, quantity)
-VALUES('black', 25, 35);
+insert into colors(coloring)
+VALUES ('red'),
+       ('green'),
+       ('yellow'),
+       ('white'),
+       ('blue'),
+       ('dark'),
+       ('green'),
+       ('white'),
+       ('black');
+
+insert into socks(color_id, cotton_part, quantity)
+VALUES (1, 40, 15),
+       (1, 70, 25),
+       (2, 55, 52),
+       (3, 60, 17),
+       (4, 70, 80),
+       (5, 45, 45),
+       (6, 35, 75),
+       (1, 95, 25),
+       (2, 75, 70),
+       (4, 80, 180),
+       (7, 10, 28),
+       (7, 25, 35);

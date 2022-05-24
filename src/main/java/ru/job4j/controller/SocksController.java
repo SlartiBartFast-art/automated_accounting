@@ -1,28 +1,38 @@
 package ru.job4j.controller;
 
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import ru.job4j.model.Color;
 import ru.job4j.model.Sock;
-import ru.job4j.service.SockService;
+import ru.job4j.model.SockDto;
+import ru.job4j.model.SockResponse;
+import ru.job4j.service.SockServiceImpl;
+import ru.job4j.utils.AppConstants;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
+
+@Validated
 @RestController
 @RequestMapping("/api")
+@AllArgsConstructor
 public class SocksController {
 
-    private final SockService service;
+    private final SockServiceImpl service;
 
-    public SocksController(SockService service) {
-        this.service = service;
-    }
+    private final ModelMapper modelMapper; //to do
 
     /**
      * findALL Sock in DB
@@ -31,21 +41,45 @@ public class SocksController {
      *
      * @return List<Sock> Entity
      */
-    @GetMapping("/socksAll")
+    @GetMapping("/")
     public List<Sock> findAll() {
         return StreamSupport.stream(
                 this.service.findAll().spliterator(), false
-        ).collect(Collectors.toList());
+        ).toList();
     }
 
     /**
-     * findALL Sock in DB
+     * Pagination and Sorting Example
+     *
+     * @param pageNo   page number
+     * @param pageSize number of entities per page
+     * @param sortBy   sort in ascending or descending order
+     * @param sortDir  default as ascending
+     * @return CarResponse entity
+     */
+    @GetMapping("/socks")
+    public SockResponse getAllPosts(
+            @RequestParam(value = "pageNo",
+                    defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize",
+                    defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy",
+                    defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir",
+                    defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir
+    ) {
+        return service.getAllSock(pageNo, pageSize, sortBy, sortDir);
+    }
+
+    /**
+     * //todo validation
+     * findALL Sock in DB, corresponding to the request criteria
      * Возвращает общее количество носков на складе,
      * соответствующих переданным в параметрах критериям запроса.
      *
      * @return
      */
-    @GetMapping("/socks")
+    @GetMapping("/socks/")
     public ResponseEntity<List<Sock>> findAllLike(@RequestParam String color,
                                                   @RequestParam String operator,
                                                   @RequestParam String cottonPart
@@ -56,7 +90,7 @@ public class SocksController {
                 || cottonPart == null
         ) {
             return new ResponseEntity<>(
-                    List.of(Sock.of(color, 0, 0)),
+                    List.of(Sock.of(new Color(), 0, 0)),
                     HttpStatus.BAD_REQUEST
             );
         }
@@ -65,7 +99,7 @@ public class SocksController {
                 || Integer.parseInt(cottonPart) <= 0
         ) {
             return new ResponseEntity<>(
-                    List.of(Sock.of(color, Integer.parseInt(cottonPart), 0)),
+                    List.of(Sock.of(new Color(0L, color), Integer.parseInt(cottonPart), 0)),
                     HttpStatus.BAD_REQUEST
             );
         }
@@ -80,69 +114,66 @@ public class SocksController {
 
     /**
      * Регистрирует приход носков на склад.
-     * увеличивается
-     * Регистрирует приход носков на склад.
      * Параметры запроса передаются в теле запроса в виде JSON-объекта со следующими
      * атрибутами:
      * color — цвет носков, строка (например, black, red, yellow);
      * cottonPart — процентное содержание хлопка в составе носков,
-     * целое число от 0 до 100 (например, 30, 18, 42);
+     * целое число от 1 до 100 (например, 30, 18, 42);
      * quantity — количество пар носков, целое число больше 0.
      * Результаты:
-     * HTTP 200 — удалось добавить приход;
+     * HTTP 201 — удалось добавить приход;
      * HTTP 400 — параметры запроса отсутствуют или имеют некорректный формат;
      * HTTP 500 — произошла ошибка, не зависящая от вызывающей стороны (например, база данных недоступна).
      *
-     * @param sock
-     * @return
+     * @param sock SockDto Object
+     * @return ResponseEntity<Sock>
      */
-    @PostMapping("/socks/income")
-    public ResponseEntity<Sock> income(@RequestBody Sock sock) {
-        if (sock.getColor().equals(null) || sock.getCottonPart() == 0 || sock.getQuantity() == 0) {
-            return new ResponseEntity<>(
-                    sock,
-                    HttpStatus.BAD_REQUEST
-            );
-        }
-        Sock rsl = this.service.save(sock);
-        if (rsl.getId() == 0) {
+    @PostMapping("/")
+    public ResponseEntity<Sock> save(@Valid @RequestBody SockDto sock) {
+        Sock result = this.service.save(modelMapper.map(sock, Sock.class));
+        if (result.getId() == 0) {
             throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR, "500 Internal Server Error. Please, check requisites."
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "We're sorry, server error, please try again later!"
             );
         }
-        return new ResponseEntity<>(
-                rsl,
-                HttpStatus.OK
-        );
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    /**
-     * Регистрирует отпуск носков со склада
+    /** //todo service
      * уменьшается
      * Регистрирует отпуск носков со склада. Здесь параметры и результаты аналогичные,
      * но общее количество носков указанного цвета и состава не увеличивается, а уменьшается.
      *
-     * @param sock
-     * @return
+     * @param sock SockDto Object
+     * @return ResponseEntity<Sock>
      */
-    @PostMapping("/socks/outcome")
-    public ResponseEntity<Sock> outcome(@RequestBody Sock sock) {
-        if (sock.getColor().equals(null) || sock.getCottonPart() == 0 || sock.getQuantity() == 0) {
-            return new ResponseEntity<>(
-                    sock,
-                    HttpStatus.BAD_REQUEST
-            );
-        }
-        Sock rsl = this.service.reduceSockQuantity(sock);
+    @PostMapping("/outcome")
+    public ResponseEntity<Sock> outcome(@Valid @RequestBody SockDto sock) {
+        Sock rsl = this.service.reduceSockQuantity(modelMapper.map(sock, Sock.class)); //todo
         if (rsl.getId() == 0) {
             throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR, "500 Internal Server Error. Please, check requisites."
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                    "We're sorry, server error, please try again later!"
             );
         }
-        return new ResponseEntity<>(
-                rsl,
-                HttpStatus.OK
-        );
+        return new ResponseEntity<>(rsl, HttpStatus.OK);
+    }
+
+//todo service
+    /**
+     * The remove Car object by Id
+     *
+     * @param id Car object
+     * @return HTTP status code and if the operation was successful Automotive object
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") @Min(1) Long id) {
+        if (id > service.findIdLastEntity()) {
+            throw new IllegalArgumentException(
+                    "The object id must be correct, object like this id don't exist!");
+        }
+        return new ResponseEntity<>(service.deleteById(id) ? OK : NOT_FOUND);
     }
 }
 

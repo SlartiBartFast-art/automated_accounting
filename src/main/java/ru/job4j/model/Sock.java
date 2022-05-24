@@ -1,6 +1,8 @@
 package ru.job4j.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -13,6 +15,8 @@ import javax.persistence.*;
  */
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "socks")
 public class Sock {
@@ -20,14 +24,14 @@ public class Sock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String color;
     private int cottonPart;
     private int quantity;
 
-    public Sock() {
-    }
+    @OneToOne
+    @JoinColumn(name = "color_id")
+    private Color color;
 
-    public static Sock of(String color, int cottonPart, int quantity) {
+    public static Sock of(Color color, int cottonPart, int quantity) {
         Sock sock = new Sock();
         sock.color = color;
         sock.cottonPart = cottonPart;

@@ -1,9 +1,11 @@
 package ru.job4j;
 
 import liquibase.integration.spring.SpringLiquibase;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
@@ -11,6 +13,16 @@ import javax.sql.DataSource;
 
 @SpringBootApplication
 public class AutomatedAccountingApplication extends SpringBootServletInitializer {
+
+    @Bean
+    public ModelMapper mapper() {
+        return new ModelMapper();
+    }
+
+    @Bean
+    public TestRestTemplate initTest() {
+        return new TestRestTemplate();
+    }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

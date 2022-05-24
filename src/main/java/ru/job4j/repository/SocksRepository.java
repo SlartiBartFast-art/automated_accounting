@@ -13,10 +13,10 @@ import java.util.Optional;
 public interface SocksRepository extends CrudRepository<Sock, Integer> {
 
     @Query("select u from Sock as u where u.color = ?1")
-    public List<Sock> findAllByColor(String color);
+    List<Sock> findAllByColor(String color);
 
     @Query("select u from Sock as u where u.cottonPart = ?1")
-    public List<Sock> findAllByCottonPart(int cottonPart);
+    List<Sock> findAllByCottonPart(int cottonPart);
 
     /**
      * найти сущность
@@ -25,12 +25,12 @@ public interface SocksRepository extends CrudRepository<Sock, Integer> {
      * @return
      */
     @Query("select u from Sock as u where u.color = ?1 and u.cottonPart = ?2")
-    public Optional<Sock> findByColorAndCottonPartWithin(String color, int cottonPart);
+    Optional<Sock> findByColorAndCottonPartWithin(String color, int cottonPart);
 
     @Query("select u from Sock as u where u.color = ?1 and u.cottonPart >= ?2")
-    public List<Sock> findAllByColorAndCottonPartAndMore(String color, int symbol);
+    List<Sock> findAllByColorAndCottonPartAndMore(String color, int symbol);
 
     @Query("select u from Sock as u where u.color = ?1 and u.cottonPart <= ?2")
-    public List<Sock> findAllByColorAndCottonPartAndSmaller(String color, int symbol);
+    List<Sock> findAllByColorAndCottonPartAndSmaller(String color, int symbol);
 
 }
