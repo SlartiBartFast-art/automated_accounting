@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * REpo Sock model
  */
-public interface SocksRepository extends CrudRepository<Sock, Integer> {
+public interface SocksRepository extends CrudRepository<Sock, Long> {
 
     @Query("select u from Sock as u where u.color = ?1")
     List<Sock> findAllByColor(String color);
@@ -18,12 +18,6 @@ public interface SocksRepository extends CrudRepository<Sock, Integer> {
     @Query("select u from Sock as u where u.cottonPart = ?1")
     List<Sock> findAllByCottonPart(int cottonPart);
 
-    /**
-     * найти сущность
-     * @param color
-     * @param cottonPart
-     * @return
-     */
     @Query("select u from Sock as u where u.color = ?1 and u.cottonPart = ?2")
     Optional<Sock> findByColorAndCottonPartWithin(String color, int cottonPart);
 
@@ -32,5 +26,7 @@ public interface SocksRepository extends CrudRepository<Sock, Integer> {
 
     @Query("select u from Sock as u where u.color = ?1 and u.cottonPart <= ?2")
     List<Sock> findAllByColorAndCottonPartAndSmaller(String color, int symbol);
+
+    Optional<Sock> findFirstByOrderByIdDesc();
 
 }

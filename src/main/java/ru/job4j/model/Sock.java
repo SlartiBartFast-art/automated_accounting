@@ -23,7 +23,7 @@ public class Sock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private int cottonPart;
     private int quantity;
 

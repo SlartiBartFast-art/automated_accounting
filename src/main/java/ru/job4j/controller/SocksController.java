@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 @Validated
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/sock")
 @AllArgsConstructor
 public class SocksController {
 
@@ -160,12 +160,11 @@ public class SocksController {
         return new ResponseEntity<>(rsl, HttpStatus.OK);
     }
 
-//todo service
     /**
-     * The remove Car object by Id
+     * The remove Sock object by Id
      *
-     * @param id Car object
-     * @return HTTP status code and if the operation was successful Automotive object
+     * @param id Sock object
+     * @return HTTP status code
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") @Min(1) Long id) {

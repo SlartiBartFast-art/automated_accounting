@@ -31,6 +31,7 @@ public class SockServiceImpl implements SockService {
         initialization();
     }
 
+//todo перенести в БД
     void initialization() {
         colors.put("white", "white");
         colors.put("black", "black");
@@ -65,7 +66,8 @@ public class SockServiceImpl implements SockService {
         return repository.findAll();
     }
 
-    /** //todo
+    /**
+     * //todo color
      * Найти по параметру цвет и % хлопка и увеличить на кол-во единиц Quantity,
      * Сохранить сущность в БД согласно указанных параметров
      *
@@ -73,7 +75,8 @@ public class SockServiceImpl implements SockService {
      * @return сохраненная сущность Sock c увеличенным числом пар
      */
     public Sock save(Sock sock) {
-        var rsl = repository.findByColorAndCottonPartWithin(sock.getColor(), sock.getCottonPart());
+        var rsl = repository
+                .findByColorAndCottonPartWithin(sock.getColor(), sock.getCottonPart());
         if (rsl.isPresent()) {
             var tempSock = rsl.get();
             var count = tempSock.getQuantity() + sock.getQuantity();
@@ -83,8 +86,8 @@ public class SockServiceImpl implements SockService {
         return repository.save(sock);
     }
 
-//todo color
     /**
+     * //todo color Object
      * Найти по параметрам color and cottonPart
      * и уменьшить количество единиц товара(Quantity) согласно заданного параметра
      *
@@ -94,7 +97,7 @@ public class SockServiceImpl implements SockService {
     public Sock reduceSockQuantity(Sock sock) {
         var rsl = repository
                 .findByColorAndCottonPartWithin(sock.getColor().getColoring(),
-                sock.getCottonPart());
+                        sock.getCottonPart());
         if (rsl.isPresent()) {
             var tempSock = rsl.get();
             var count = tempSock.getQuantity() - sock.getQuantity();
@@ -155,6 +158,7 @@ public class SockServiceImpl implements SockService {
     }
 
     /**
+     * //todo color Object
      * найти по 2-м параметрам и уменьшить общее колл-во на 3-й параметр
      *
      * @param sock запрос с объектом
@@ -192,16 +196,30 @@ public class SockServiceImpl implements SockService {
         return List.of(findByColorAndCottonPart(color, cottonPart));
     }
 
+    public Long findIdLastEntity() {
+        var rsl = repository.findFirstByOrderByIdDesc();
+        return rsl.isPresent() ? rsl.get().getId() : 0L;
+    }
+
     /**
      * Pagination and Sorting Example
-     * @param pageNo page number
+     *
+     * @param pageNo   page number
      * @param pageSize number of entities per page
-     * @param sortBy sort in ascending or descending order
-     * @param sortDir default as ascending
+     * @param sortBy   sort in ascending or descending order
+     * @param sortDir  default as ascending
      * @return CarResponse entity
      */
     @Override
     public SockResponse getAllSock(int pageNo, int pageSize, String sortBy, String sortDir) {
         return null;
+    }
+
+    public boolean deleteById(Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
