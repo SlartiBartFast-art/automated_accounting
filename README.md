@@ -1,30 +1,31 @@
-#automated_accounting
+## Учет непродовольственных товаров на складе
 
 [![Build Status](https://app.travis-ci.com/SlartiBartFast-art/automated_accounting.svg?branch=master)](https://app.travis-ci.com/SlartiBartFast-art/automated_accounting)
 ![GitHub top language](https://img.shields.io/github/languages/top/SlartiBartFast-art/automated_accounting?logo=java&logoColor=red&style=plastic)
 ![GitHub last commit](https://img.shields.io/github/last-commit/SlartiBartFast-art/automated_accounting?logo=github)
 
+app is under development
+
 Приложение для автоматизации учёта товаров на складе магазина. 
+
 Приложение использует REST API архитектуру
 развернуто в облаке(Heroku)
    - https://automated-accounting.herokuapp.com/
 
-Used technologies
+Used technology stack:
 ______________________________________________
 - Java Core
 - JWT
-- Rest API
-- Spring Boot Security
-- Spring Boot Data JPA
-- Spring Boot Web
-- Spring Boot Tomcat
+- Spring Boot (Web, Data JPA, Security) 
 - Maven
 - Travis C.I.
+- Postman - (Postman is an API platform for building and using API)
+- Docker
+Что необходимо сделать:
 
+Реализовать приложение для автоматизации учёта носков на складе магазина.
 
-Что нужно сделать
-
-Реализовать приложение для автоматизации учёта носков на складе магазина. Кладовщик должен иметь возможность:
+Кладовщик должен иметь возможность:
 _____________
 -  учесть приход и отпуск носков;
 -  узнать общее количество носков определенного цвета и состава в данный момент времени.
@@ -32,7 +33,6 @@ _____________
 
 Список URL HTTP-методов
 ________
-
 
  POST /api/socks/income
 
@@ -99,14 +99,12 @@ GET /api/socks
 
 Для хранения данных системы можно использовать любую реляционную базу данных. Схему БД желательно хранить в репозитории в любом удобном виде.
 
-Как это сделать
-
-Мы ждем, что решение будет:
+Как это сделать, решение будет:
 
 -  написано на языке Java; 
 -  standalone - состоять из одного выполняемого компонента верхнего уровня;
 -  headless - без UI; 
--  оформлено как форк к репозитарию и создан пул реквест.
+-  оформлено как репозиторий.
    
 Будет плюсом, если:
 

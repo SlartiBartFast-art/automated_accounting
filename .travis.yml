@@ -1,4 +1,4 @@
-# используем язык java. Travis CI поддерживает другие языки тоже.
+# используем язык java. для Travis CI
 language: java
 jdk:
   - openjdk17
@@ -7,7 +7,7 @@ services:
   - postgresql
 
 before_install:
-  - psql -c 'create database tracker;' -U postgres
+  - psql -c 'create database automated_accounting;' -U postgres
 
 cache:
   directories:
@@ -18,11 +18,11 @@ cache:
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
-# Отправлять уведомление на почту JekHamond@tutanota.com(Изменить на свою) если сборка упала
+# Отправлять уведомление на почту ---(Изменить на свою) если сборка упала
 notifications:
   email:
     recipients:
-      -JekHamond@tutanota.com
+      -yous@mail.com
     on_success: never # default: change
     on_failure: always # default: always
 env:

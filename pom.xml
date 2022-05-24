@@ -12,7 +12,7 @@
     <artifactId>automated_accounting</artifactId>
     <version>1.0</version>
     <name>automated_accounting</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Еhe project is written using Spring Boot</description>
     <packaging>jar</packaging>
 
     <properties>
@@ -26,7 +26,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency> <!--Подключите Spring Data. in to sprig boot -->
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
@@ -38,7 +38,7 @@
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>
         </dependency>
-        <dependency> <!--для подключения к базе данных PostgreSQL -->
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.2.12</version>
