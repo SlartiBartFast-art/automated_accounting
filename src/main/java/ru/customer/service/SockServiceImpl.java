@@ -91,7 +91,7 @@ public class SockServiceImpl implements SockService {
     }
 
     public boolean parameterMatching(String coloring, String operator, String cottonPart) {
-        return  !coloring.equals(matchesColor(coloring))
+        return !coloring.equals(matchesColor(coloring))
                 || !operator.equals(matchesOperator(operator))
                 || !NumberUtils.isCreatable(cottonPart)
                 || Integer.parseInt(cottonPart) <= 0;

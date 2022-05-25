@@ -5,7 +5,7 @@ VALUES ('red'),
        ('white'),
        ('blue'),
        ('dark'),
-       ('green'),
+       ('grey'),
        ('white'),
        ('black');
 
