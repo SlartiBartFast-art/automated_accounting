@@ -1,20 +1,22 @@
-package ru.job4j.controller;
+package ru.customer.controller;
 
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import ru.job4j.model.Color;
-import ru.job4j.model.Sock;
-import ru.job4j.model.SockDto;
-import ru.job4j.model.SockResponse;
-import ru.job4j.service.SockServiceImpl;
-import ru.job4j.utils.AppConstants;
+import ru.customer.model.Color;
+import ru.customer.model.Sock;
+import ru.customer.model.SockDto;
+import ru.customer.model.SockResponse;
+import ru.customer.service.SockServiceImpl;
+import ru.customer.utils.AppConstants;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
@@ -29,6 +31,8 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("/sock")
 @AllArgsConstructor
 public class SocksController {
+
+    static final Logger LOGGER = LoggerFactory.getLogger(SocksController.class);
 
     private final SockServiceImpl service;
 
@@ -84,6 +88,7 @@ public class SocksController {
                                                   @RequestParam String operator,
                                                   @RequestParam String cottonPart
     ) {
+        LOGGER.info("Что пришло ->{}", color + operator + cottonPart);
         if (!color.equals(service.matchesColor(color))
                 || !operator.equals(service.matchesOperator(operator))
                 || !NumberUtils.isCreatable(cottonPart)
@@ -107,8 +112,9 @@ public class SocksController {
                 color,
                 operator,
                 Integer.parseInt(cottonPart));
-        return new ResponseEntity<List<Sock>>(rsl,
-                !rsl.isEmpty() ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR
+        LOGGER.info("Что нашлось -> {}", rsl);
+        return new ResponseEntity<>(rsl,
+                rsl.get(0).getColor() != null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR
         );
     }
 
@@ -150,7 +156,7 @@ public class SocksController {
      */
     @PostMapping("/outcome")
     public ResponseEntity<Sock> outcome(@Valid @RequestBody SockDto sock) {
-        Sock rsl = this.service.reduceSockQuantity(modelMapper.map(sock, Sock.class)); //todo
+        Sock rsl = this.service.reduceSockQuantity(modelMapper.map(sock, Sock.class));
         if (rsl.getId() == 0) {
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR,

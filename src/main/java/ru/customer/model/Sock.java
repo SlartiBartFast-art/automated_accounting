@@ -1,10 +1,12 @@
-package ru.job4j.model;
+package ru.customer.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * модель описывает Носок -
@@ -27,7 +29,7 @@ public class Sock {
     private int cottonPart;
     private int quantity;
 
-    @OneToOne
+    @ManyToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name = "color_id")
     private Color color;
 

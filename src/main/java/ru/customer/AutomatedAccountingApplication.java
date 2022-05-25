@@ -1,4 +1,4 @@
-package ru.job4j;
+package ru.customer;
 
 import liquibase.integration.spring.SpringLiquibase;
 import org.modelmapper.ModelMapper;

@@ -1,6 +1,6 @@
-package ru.job4j.service;
+package ru.customer.service;
 
-import ru.job4j.model.SockResponse;
+import ru.customer.model.SockResponse;
 
 public interface SockService {
 

@@ -1,4 +1,4 @@
-package ru.job4j.service;
+package ru.customer.service;
 
 import java.util.HashSet;
 import java.util.Set;
