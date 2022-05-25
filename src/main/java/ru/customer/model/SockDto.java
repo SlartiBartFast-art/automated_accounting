@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
 @Data
@@ -17,14 +18,6 @@ public class SockDto {
     private int cottonPart;
     @Min(value = 1, message = "Quantity must be not empty and more than 1")
     private int quantity;
-
+    @Valid
     private ColorDto color;
-
-    public static SockDto of(int number, int mark, ColorDto color, int year) {
-        SockDto sockDto = new SockDto();
-        sockDto.cottonPart = number;
-        sockDto.quantity = mark;
-        sockDto.color = color;
-        return sockDto;
-    }
 }

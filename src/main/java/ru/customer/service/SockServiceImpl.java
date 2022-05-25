@@ -2,6 +2,7 @@ package ru.customer.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -87,6 +88,13 @@ public class SockServiceImpl implements SockService {
 
     private Optional<Color> findByColor(String coloring) {
         return colorRepository.findColorByColoring(coloring);
+    }
+
+    public boolean parameterMatching(String coloring, String operator, String cottonPart) {
+        return  !coloring.equals(matchesColor(coloring))
+                || !operator.equals(matchesOperator(operator))
+                || !NumberUtils.isCreatable(cottonPart)
+                || Integer.parseInt(cottonPart) <= 0;
     }
 
     /**

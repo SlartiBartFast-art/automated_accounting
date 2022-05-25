@@ -20,6 +20,8 @@ import ru.customer.utils.AppConstants;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -35,7 +37,7 @@ public class SocksController {
 
     private final SockServiceImpl service;
 
-    private final ModelMapper modelMapper; //to do
+    private final ModelMapper modelMapper;
 
     /**
      * findALL Sock in DB
@@ -83,33 +85,28 @@ public class SocksController {
      * @return
      */
     @GetMapping("/socks/")
-    public ResponseEntity<List<Sock>> findAllLike(@RequestParam String color,
-                                                  @RequestParam String operator,
-                                                  @RequestParam String cottonPart
+    public ResponseEntity<List<Sock>> findAllLike(@RequestParam("coloring")
+                                                  @NotBlank(message = "coloring must not be empty")
+                                                          String coloring,
+                                                  @Size(min = 2, max = 10,
+                                                          message = "The length of full name must "
+                                                                  + "be between 2 and 100 characters.")
+                                                  @RequestParam("operator")
+                                                  @NotBlank(message = "operator must not be empty")
+                                                          String operator,
+                                                  @RequestParam("cottonPart")
+                                                  @NotBlank(message = "cottonPart must not be empty")
+                                                          String cottonPart
     ) {
-        LOGGER.info("Что пришло ->{}", color + operator + cottonPart);
-        if (!color.equals(service.matchesColor(color))
-                || !operator.equals(service.matchesOperator(operator))
-                || !NumberUtils.isCreatable(cottonPart)
-                || cottonPart == null
-        ) {
+        LOGGER.info("Что пришло ->{}", coloring + operator + cottonPart);
+        if (service.parameterMatching(coloring, operator, cottonPart)) {
             return new ResponseEntity<>(
                     List.of(Sock.of(new Color(), 0, 0)),
                     BAD_REQUEST
             );
         }
-        if (color == null
-                || operator == null
-                || Integer.parseInt(cottonPart) <= 0
-        ) {
-            return new ResponseEntity<>(
-                    List.of(Sock.of(new Color(0L, color),
-                            Integer.parseInt(cottonPart), 0)),
-                    BAD_REQUEST
-            );
-        }
         var rsl = service.findByOperator(
-                color,
+                coloring,
                 operator,
                 Integer.parseInt(cottonPart));
         LOGGER.info("Что нашлось -> {}", rsl);
@@ -146,15 +143,15 @@ public class SocksController {
     }
 
     /**
-     * уменьшается
-     * Регистрирует отпуск носков со склада. Здесь параметры и результаты аналогичные,
+     * Регистрирует отпуск носков со склада.
+     * Здесь параметры и результаты аналогичные,
      * но общее количество носков указанного цвета и состава не увеличивается, а уменьшается.
      *
      * @param sock SockDto Object
      * @return ResponseEntity<Sock>
      */
-    @PostMapping("/outcome")
-    public ResponseEntity<Sock> outcome(@Valid @RequestBody SockDto sock) {
+    @PatchMapping("/")
+    public ResponseEntity<Sock> updateOutcome(@Valid @RequestBody SockDto sock) {
         Sock rsl = this.service.reduceSockQuantity(modelMapper.map(sock, Sock.class));
         if (rsl.getId() == 0) {
             throw new ResponseStatusException(
