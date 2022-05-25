@@ -63,7 +63,6 @@ public class SockServiceImpl implements SockService {
     }
 
     /**
-     * //todo color - test logger
      * Найти по параметру цвет и % хлопка и увеличить на кол-во единиц Quantity,
      * Сохранить сущность в БД согласно указанных параметров
      *
@@ -74,8 +73,6 @@ public class SockServiceImpl implements SockService {
         var color = findByColor(sock.getColor().getColoring());
         if (color.isPresent()) {
             var rsl = repository
-//                    .findByColorAndCottonPartWithin(
-//                            color.get().getId(), sock.getCottonPart());
                     .findSockByColorAndCottonPart(color.get(), sock.getCottonPart());
             LOGGER.info("Что нашли -> {}", rsl);
             if (rsl.isPresent()) {
@@ -93,7 +90,6 @@ public class SockServiceImpl implements SockService {
     }
 
     /**
-     * //todo color Object - test logger
      * Найти по параметрам color and cottonPart
      * и уменьшить количество единиц товара(Quantity) согласно заданного параметра
      *
@@ -157,7 +153,7 @@ public class SockServiceImpl implements SockService {
      */
     public List<Sock> findByOperator(String color, String operator, int cottonPart) {
         var rsl = colorRepository.findColorByColoring(color);
-        LOGGER.info("Что нашлось в репозитории цвета -> " + rsl);
+        LOGGER.info("Что нашлось в репозитории цвета -> {}", rsl);
         if (rsl.isPresent()) {
             var rslColor = rsl.get();
             if (operator.equals(AppConstants.MORE_THAN)) {

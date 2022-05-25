@@ -23,8 +23,7 @@ import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @Validated
 @RestController
@@ -96,7 +95,7 @@ public class SocksController {
         ) {
             return new ResponseEntity<>(
                     List.of(Sock.of(new Color(), 0, 0)),
-                    HttpStatus.BAD_REQUEST
+                    BAD_REQUEST
             );
         }
         if (color == null
@@ -104,8 +103,9 @@ public class SocksController {
                 || Integer.parseInt(cottonPart) <= 0
         ) {
             return new ResponseEntity<>(
-                    List.of(Sock.of(new Color(0L, color), Integer.parseInt(cottonPart), 0)),
-                    HttpStatus.BAD_REQUEST
+                    List.of(Sock.of(new Color(0L, color),
+                            Integer.parseInt(cottonPart), 0)),
+                    BAD_REQUEST
             );
         }
         var rsl = service.findByOperator(
@@ -114,8 +114,7 @@ public class SocksController {
                 Integer.parseInt(cottonPart));
         LOGGER.info("Что нашлось -> {}", rsl);
         return new ResponseEntity<>(rsl,
-                rsl.get(0).getColor() != null ? HttpStatus.OK : HttpStatus.INTERNAL_SERVER_ERROR
-        );
+                rsl.get(0).getColor() != null ? OK : INTERNAL_SERVER_ERROR);
     }
 
     /**
@@ -136,17 +135,17 @@ public class SocksController {
      */
     @PostMapping("/")
     public ResponseEntity<Sock> save(@Valid @RequestBody SockDto sock) {
-        Sock result = this.service.save(modelMapper.map(sock, Sock.class));
-        if (result.getId() == 0) {
+        Sock rsl = this.service.save(modelMapper.map(sock, Sock.class));
+        if (rsl.getId() == 0) {
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR,
                     "We're sorry, server error, please try again later!"
             );
         }
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+        return new ResponseEntity<>(rsl, CREATED);
     }
 
-    /** //todo service
+    /**
      * уменьшается
      * Регистрирует отпуск носков со склада. Здесь параметры и результаты аналогичные,
      * но общее количество носков указанного цвета и состава не увеличивается, а уменьшается.
@@ -163,7 +162,7 @@ public class SocksController {
                     "We're sorry, server error, please try again later!"
             );
         }
-        return new ResponseEntity<>(rsl, HttpStatus.OK);
+        return new ResponseEntity<>(rsl, OK);
     }
 
     /**
