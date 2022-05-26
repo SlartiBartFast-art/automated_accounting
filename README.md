@@ -19,9 +19,10 @@ ______________________________________________
 - Spring Boot (Web, Data JPA, Security) 
 - Liquibase  
 - Maven
+- Docker
 - Travis C.I.
 - Postman - (Postman is an API platform for building and using API)
-- Docker
+
 
 Что необходимо сделать:
 

@@ -59,10 +59,6 @@ public class SockServiceImpl implements SockService {
                 : AppConstants.RESPONSE;
     }
 
-    public Iterable<Sock> findAll() {
-        return repository.findAll();
-    }
-
     /**
      * Найти по параметру цвет и % хлопка и увеличить на кол-во единиц Quantity,
      * Сохранить сущность в БД согласно указанных параметров
@@ -126,27 +122,6 @@ public class SockServiceImpl implements SockService {
     }
 
     /**
-     * Find by ID
-     *
-     * @param id Long
-     * @return Optional<Sock>
-     */
-    public Optional<Sock> findById(Long id) {
-        return repository.findById(id);
-    }
-
-    /**
-     * cottonPart — процентное содержание хлопка в составе носков,
-     * целое число от 0 до 100 (например, 30, 18, 42);
-     *
-     * @param cottonPart
-     * @return List<Sock>
-     */
-    public List<Sock> findByCottonPart(int cottonPart) {
-        return repository.findAllByCottonPart(cottonPart);
-    }
-
-    /**
      * Возвращает общее количество носков на складе,
      * соответствующих переданным в параметрах критериям запроса.
      * вернуть результат выборки по параметрам запроса UI
@@ -203,18 +178,17 @@ public class SockServiceImpl implements SockService {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
-        Page<Sock> socks = (Page<Sock>) repository.findAll((Specification<Sock>) pageable);
-        //todo Page<Sock> socks = repository.findAll(pageable);
+        Page<Sock> socks = repository.findAll(pageable);
         List<Sock> listOfSock = socks.getContent();
 
-        SockResponse carResponse = new SockResponse();
-        carResponse.setContent(listOfSock);
-        carResponse.setPageNo(socks.getNumber());
-        carResponse.setPageSize(socks.getSize());
-        carResponse.setTotalElements(socks.getTotalElements());
-        carResponse.setTotalPages(socks.getTotalPages());
-        carResponse.setLast(socks.isLast());
-        return carResponse;
+        SockResponse sockResponse = new SockResponse();
+        sockResponse.setContent(listOfSock);
+        sockResponse.setPageNo(socks.getNumber());
+        sockResponse.setPageSize(socks.getSize());
+        sockResponse.setTotalElements(socks.getTotalElements());
+        sockResponse.setTotalPages(socks.getTotalPages());
+        sockResponse.setLast(socks.isLast());
+        return sockResponse;
     }
 
     public boolean deleteById(Long id) {
@@ -224,4 +198,26 @@ public class SockServiceImpl implements SockService {
         }
         return false;
     }
+    /**
+     * Find by ID
+     *
+     * @param id Long
+     * @return Optional<Sock>
+     */
+
+    public Optional<Sock> findById(Long id) {
+        return repository.findById(id);
+    }
+
+    /**
+     * cottonPart — процентное содержание хлопка в составе носков,
+     * целое число от 0 до 100 (например, 30, 18, 42);
+     *
+     * @param cottonPart
+     * @return List<Sock>
+     */
+    public List<Sock> findByCottonPart(int cottonPart) {
+        return repository.findAllByCottonPart(cottonPart);
+    }
+
 }

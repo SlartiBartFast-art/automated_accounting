@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class ColorDto {
 
-    @Min(value = 1, message = "ID must be not empty and more than 0")
+   // @Min(value = 1, message = "ID must be not empty and more than 0")
     private Long id;
     @NotBlank(message = "Coloring must be not empty")
     private String coloring;

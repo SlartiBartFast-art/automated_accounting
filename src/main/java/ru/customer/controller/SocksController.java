@@ -40,20 +40,6 @@ public class SocksController {
     private final ModelMapper modelMapper;
 
     /**
-     * findALL Sock in DB
-     * Возвращает общее количество носков на складе,
-     * соответствующих переданным в параметрах критериям запроса.
-     *
-     * @return List<Sock> Entity
-     */
-    @GetMapping("/")
-    public List<Sock> findAll() {
-        return StreamSupport.stream(
-                this.service.findAll().spliterator(), false
-        ).toList();
-    }
-
-    /**
      * Pagination and Sorting Example
      *
      * @param pageNo   page number
@@ -62,8 +48,8 @@ public class SocksController {
      * @param sortDir  default as ascending
      * @return CarResponse entity
      */
-    @GetMapping("/socks")
-    public SockResponse getAllPosts(
+    @GetMapping("/")
+    public SockResponse getAllSocks(
             @RequestParam(value = "pageNo",
                     defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(value = "pageSize",
@@ -77,25 +63,21 @@ public class SocksController {
     }
 
     /**
-     * //todo validation
-     * findALL Sock in DB, corresponding to the request criteria
+     * findALL Entity (Sock) in DB, corresponding to the request criteria
      * Возвращает общее количество носков на складе,
      * соответствующих переданным в параметрах критериям запроса.
      *
-     * @return
+     * @return ResponseEntity<List<Sock>>
      */
-    @GetMapping("/socks/")
+    @GetMapping("/socks")
     public ResponseEntity<List<Sock>> findAllLike(@RequestParam("coloring")
-                                                  @NotBlank(message = "coloring must not be empty")
+                                                  @NotBlank(message = "Coloring must not be empty!")
                                                           String coloring,
-                                                  @Size(min = 2, max = 10,
-                                                          message = "The length of full name must "
-                                                                  + "be between 2 and 100 characters.")
+                                                  @NotBlank(message = "Operator must not be empty!")
                                                   @RequestParam("operator")
-                                                  @NotBlank(message = "operator must not be empty")
                                                           String operator,
                                                   @RequestParam("cottonPart")
-                                                  @NotBlank(message = "cottonPart must not be empty")
+                                                  @NotBlank(message = "CottonPart must not be empty!")
                                                           String cottonPart
     ) {
         LOGGER.info("Что пришло ->{}", coloring + operator + cottonPart);
@@ -115,7 +97,7 @@ public class SocksController {
     }
 
     /**
-     * Регистрирует приход носков на склад.
+     * Регистрирует приход Entity на склад.
      * Параметры запроса передаются в теле запроса в виде JSON-объекта со следующими
      * атрибутами:
      * color — цвет носков, строка (например, black, red, yellow);
@@ -132,6 +114,7 @@ public class SocksController {
      */
     @PostMapping("/")
     public ResponseEntity<Sock> save(@Valid @RequestBody SockDto sock) {
+        LOGGER.info("ТО что пришло увеличение -> {}", sock);
         Sock rsl = this.service.save(modelMapper.map(sock, Sock.class));
         if (rsl.getId() == 0) {
             throw new ResponseStatusException(
@@ -143,7 +126,7 @@ public class SocksController {
     }
 
     /**
-     * Регистрирует отпуск носков со склада.
+     * Регистрирует отпуск Entity(носков) со склада.
      * Здесь параметры и результаты аналогичные,
      * но общее количество носков указанного цвета и состава не увеличивается, а уменьшается.
      *
@@ -152,6 +135,7 @@ public class SocksController {
      */
     @PatchMapping("/")
     public ResponseEntity<Sock> updateOutcome(@Valid @RequestBody SockDto sock) {
+        LOGGER.info("ТО что пришло Уменьшение -> {}", sock);
         Sock rsl = this.service.reduceSockQuantity(modelMapper.map(sock, Sock.class));
         if (rsl.getId() == 0) {
             throw new ResponseStatusException(
@@ -170,6 +154,7 @@ public class SocksController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") @Min(1) Long id) {
+        LOGGER.info("ТО что пришло УДАЛЕНИЕ -> {}", id);
         if (id > service.findIdLastEntity()) {
             throw new IllegalArgumentException(
                     "The object id must be correct, object like this id don't exist!");

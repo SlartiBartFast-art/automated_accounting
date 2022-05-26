@@ -1,18 +1,16 @@
 package ru.customer.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+
 import ru.customer.model.Color;
 import ru.customer.model.Sock;
 
 import java.util.List;
 import java.util.Optional;
 
-/**
- * REpo Sock model
- */
-public interface SocksRepository extends CrudRepository<Sock, Long>, JpaSpecificationExecutor<Sock> {
+public interface SocksRepository extends JpaRepository<Sock, Long>, JpaSpecificationExecutor<Sock> {
 
     @Query("select u from Sock as u where u.color = ?1")
     List<Sock> findAllByColor(String color);
