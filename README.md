@@ -84,17 +84,17 @@ Entity (Color)
 
 GET /sock/
 
-доступен, вывод страниц согласно условиям пагинации и сортировки.
+вывод страниц согласно условиям пагинации и сортировки.
 
-http://localhost:8080/sock?pageSize=5
+http://localhost:8080/sock/?pageSize=5
 
-http://localhost:8080/sock?pageSize=5&pageNo=1
+http://localhost:8080/sock/?pageSize=5&pageNo=1
 
-http://localhost:8080/sock?pageSize=5&pageNo=2
+http://localhost:8080/sock/?pageSize=5&pageNo=2
 
-http://localhost:8080/sock?pageSize=5&pageNo=1&sortBy=id
+http://localhost:8080/sock/?pageSize=5&pageNo=1&sortBy=id
 
-http://localhost:8080/sock?pageSize=5&pageNo=1&sortBy=id&sortDir=asc
+http://localhost:8080/sock/?pageSize=5&pageNo=1&sortBy=id&sortDir=asc
 
 ![Image of Arch](https://github.com/SlartiBartFast-art/automated_accounting/blob/master/image/Screenshot_3.jpg)
 
