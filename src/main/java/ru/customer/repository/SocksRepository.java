@@ -21,9 +21,9 @@ public interface SocksRepository extends JpaRepository<Sock, Long>, JpaSpecifica
     Optional<Sock> findSockByColorAndCottonPart(Color color, int cottonPart);
 
     /**
-     * @param color
+     * @param color Object
      * @param cottonPart % соотношение хлопка
-     * @return
+     * @return Optional<List<Sock>>
      */
     @Query("select u from Sock as u where u.color = ?1 and u.cottonPart >= ?2")
     Optional<List<Sock>> findSocksByColorAndCottonPartIsGreaterThanOrderById(Color color, int cottonPart);

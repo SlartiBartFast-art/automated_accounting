@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
+
 import org.springframework.stereotype.Service;
 import ru.customer.model.Color;
 import ru.customer.model.Sock;
@@ -71,7 +71,6 @@ public class SockServiceImpl implements SockService {
         if (color.isPresent()) {
             var rsl = repository
                     .findSockByColorAndCottonPart(color.get(), sock.getCottonPart());
-            LOGGER.info("Что нашли -> {}", rsl);
             if (rsl.isPresent()) {
                 var tempSock = rsl.get();
                 tempSock.setQuantity(tempSock.getQuantity() + sock.getQuantity());
@@ -136,7 +135,6 @@ public class SockServiceImpl implements SockService {
      */
     public List<Sock> findByOperator(String color, String operator, int cottonPart) {
         var rsl = colorRepository.findColorByColoring(color);
-        LOGGER.info("Что нашлось в репозитории цвета -> {}", rsl);
         if (rsl.isPresent()) {
             var rslColor = rsl.get();
             if (operator.equals(AppConstants.MORE_THAN)) {

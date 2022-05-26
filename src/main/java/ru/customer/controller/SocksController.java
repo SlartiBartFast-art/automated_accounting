@@ -11,10 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import ru.customer.model.Color;
-import ru.customer.model.Sock;
-import ru.customer.model.SockDto;
-import ru.customer.model.SockResponse;
+import ru.customer.model.*;
 import ru.customer.service.SockServiceImpl;
 import ru.customer.utils.AppConstants;
 
@@ -67,7 +64,7 @@ public class SocksController {
      * Возвращает общее количество носков на складе,
      * соответствующих переданным в параметрах критериям запроса.
      *
-     * @return ResponseEntity<List<Sock>>
+     * @return ResponseEntity<List < Sock>>
      */
     @GetMapping("/socks")
     public ResponseEntity<List<Sock>> findAllLike(@RequestParam("coloring")
@@ -78,9 +75,7 @@ public class SocksController {
                                                           String operator,
                                                   @RequestParam("cottonPart")
                                                   @NotBlank(message = "CottonPart must not be empty!")
-                                                          String cottonPart
-    ) {
-        LOGGER.info("Что пришло ->{}", coloring + operator + cottonPart);
+                                                          String cottonPart) {
         if (service.parameterMatching(coloring, operator, cottonPart)) {
             return new ResponseEntity<>(
                     List.of(Sock.of(new Color(), 0, 0)),
@@ -91,7 +86,6 @@ public class SocksController {
                 coloring,
                 operator,
                 Integer.parseInt(cottonPart));
-        LOGGER.info("Что нашлось -> {}", rsl);
         return new ResponseEntity<>(rsl,
                 rsl.get(0).getColor() != null ? OK : INTERNAL_SERVER_ERROR);
     }
@@ -114,7 +108,6 @@ public class SocksController {
      */
     @PostMapping("/")
     public ResponseEntity<Sock> save(@Valid @RequestBody SockDto sock) {
-        LOGGER.info("ТО что пришло увеличение -> {}", sock);
         Sock rsl = this.service.save(modelMapper.map(sock, Sock.class));
         if (rsl.getId() == 0) {
             throw new ResponseStatusException(
@@ -134,8 +127,7 @@ public class SocksController {
      * @return ResponseEntity<Sock>
      */
     @PatchMapping("/")
-    public ResponseEntity<Sock> updateOutcome(@Valid @RequestBody SockDto sock) {
-        LOGGER.info("ТО что пришло Уменьшение -> {}", sock);
+    public ResponseEntity<Sock> updateOutcome(@Valid @RequestBody SockDtoPatch sock) {
         Sock rsl = this.service.reduceSockQuantity(modelMapper.map(sock, Sock.class));
         if (rsl.getId() == 0) {
             throw new ResponseStatusException(
@@ -154,7 +146,6 @@ public class SocksController {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") @Min(1) Long id) {
-        LOGGER.info("ТО что пришло УДАЛЕНИЕ -> {}", id);
         if (id > service.findIdLastEntity()) {
             throw new IllegalArgumentException(
                     "The object id must be correct, object like this id don't exist!");

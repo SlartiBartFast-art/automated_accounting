@@ -27,7 +27,7 @@ public class Sock {
     private int cottonPart;
     private int quantity;
 
-    @ManyToOne//(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "color_id")
     private Color color;
 
