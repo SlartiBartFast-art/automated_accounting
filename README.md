@@ -25,7 +25,17 @@ ______________________________________________
 - Travis C.I.
 - Postman - (Postman is an API platform for building and using API)
 
+Коллекция запрос расположена в папке проекта /collections
 
+Docker образ приложения, Вы можете скачать по ссылке:
+
+ https://hub.docker.com/r/slartibartfastart/automated
+
+ или To pull image from repository:
+
+docker pull slartibartfastart/automated:latest
+
+------------
 Что необходимо сделать:
 
 Реализовать приложение для автоматизации учёта носков на складе магазина.
@@ -65,7 +75,9 @@ _____________
 ________
 Entity (Sock)
 ![Image of Arch](https://github.com/SlartiBartFast-art/automated_accounting/blob/master/image/Screenshot_1.jpg)
+
 Entity (Color)
+
 ![Image of Arch](https://github.com/SlartiBartFast-art/automated_accounting/blob/master/image/Screenshot_2.jpg)
 
     - Получить список всех сущностей хранимых в БД
@@ -92,9 +104,6 @@ GET /sock/socks
 -  /sock/socks?color=black&operator=lessThan&cottonPart=15 — должен вернуть общее количество черных носков с долей хлопка менее 10%.
 -  /sock/socks?color=red&operator=moreThan&cottonPart=90 — должен вернуть общее количество красных носков с долей хлопка более 90%;
 и т.д.
- -  /sock/socks?color=red&operator=moreThan&cottonPart=90 
-
-— должен вернуть общее количество красных носков с долей хлопка более 90%;
 
 ![Image of Arch](https://github.com/SlartiBartFast-art/automated_accounting/blob/master/image/Screenshot_5.jpg)
 

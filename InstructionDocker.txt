@@ -1,0 +1,37 @@
+Docker образ приложения, Вы можете скачать по ссылке:
+
+https://hub.docker.com/r/slartibartfastart/automated
+
+или To pull image from repository:
+
+docker pull slartibartfastart/automated:latest
+
+Краткая инструкция по использованию docker-compose:
+
+ создайте на вашем компьютере рабочую папку, расположение и имя выбираете сами
+
+для Windows: C:\projects\automated_accounting
+
+для Linux: ~coding/docker/automated_accounting
+
+Скачайте файл docker-compose.yml расположенный по адресу
+
+https://github.com/SlartiBartFast-art/automated_accounting/tree/master/src/main/docker
+
+и положите в созданную вами папку
+
+откройте окно терминала:
+
+для Windows в текущей папке в строке пути введите cmd, нажмите Enter
+
+для Linux откройте окно терминала, и перейдите в созданную вами папку cd имя_папки
+
+Запустим: docker-compose up
+
+В вашем браузере создайте новую вкладку и введите
+
+ - http://localhost:8080/sock/
+
+ далее вы можете пользоваться согласно имеющегося функционала ниже
+
+Завершим работу: docker-compose down
