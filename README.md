@@ -2,7 +2,7 @@
 
 [![Build Status](https://app.travis-ci.com/SlartiBartFast-art/automated_accounting.svg?branch=master)](https://app.travis-ci.com/SlartiBartFast-art/automated_accounting)
 ![GitHub top language](https://img.shields.io/github/languages/top/SlartiBartFast-art/automated_accounting?logo=java&logoColor=red&style=plastic)
-![GitHub last commit](https://img.shields.io/github/last-commit/SlartiBartFast-art/automated_accounting?logo=github)
+![GitHub last commit](https://img.shields.io/github/last-commit/SlartiBartFast-art/automated_accounting?logo=github&logoColor=red)
 
 app is under development
 
