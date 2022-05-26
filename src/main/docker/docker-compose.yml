@@ -6,16 +6,16 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=shortcut
+      - POSTGRES_DB=automated_accounting
       - PGDATA=/var/lib/postgresql/data
     volumes:
-      - ./db/shortcut/data:/var/lib/postgresql/data
+      - ./db/automated_accounting/data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     restart: always
   app:
-    image: 'slartibartfastart/automated:latest'
-    container_name: goods-accounting
+    image: 'slartibartfastart/automated-accounting:latest'
+    container_name: automated-accounting
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/automated_accounting
       - SPRING_DATASOURCE_USERNAME=postgres

@@ -8,8 +8,8 @@
         <version>2.6.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>ru.job4j</groupId>
-    <artifactId>automated_accounting</artifactId>
+    <groupId>ru.customer</groupId>
+    <artifactId>automated-accounting</artifactId>
     <version>1.0</version>
     <name>automated_accounting</name>
     <description>The project is written using Spring Boot</description>
