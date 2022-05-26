@@ -12,7 +12,7 @@
     <artifactId>automated_accounting</artifactId>
     <version>1.0</version>
     <name>automated_accounting</name>
-    <description>Еhe project is written using Spring Boot</description>
+    <description>The project is written using Spring Boot</description>
     <packaging>jar</packaging>
 
     <properties>
@@ -46,6 +46,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.200</version>
             <scope>test</scope>
         </dependency>
         <dependency>

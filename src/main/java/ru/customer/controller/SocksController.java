@@ -18,7 +18,7 @@ import ru.customer.utils.AppConstants;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -35,6 +35,11 @@ public class SocksController {
     private final SockServiceImpl service;
 
     private final ModelMapper modelMapper;
+
+    @GetMapping("/socksAll")
+    public List<Sock> findAll() {
+        return service.findAll();
+    }
 
     /**
      * Pagination and Sorting Example
@@ -88,6 +93,18 @@ public class SocksController {
                 Integer.parseInt(cottonPart));
         return new ResponseEntity<>(rsl,
                 rsl.get(0).getColor() != null ? OK : INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * The find by id Entity object
+     *
+     * @return ResponseEntity<Sock> Sock obj or null
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<Sock> findById(@PathVariable Long id) {
+        return service.findById(id)
+                .map(sock -> new ResponseEntity<>(sock, OK))
+                .orElseGet(() -> new ResponseEntity<>(new Sock(), NOT_FOUND));
     }
 
     /**

@@ -218,4 +218,7 @@ public class SockServiceImpl implements SockService {
         return repository.findAllByCottonPart(cottonPart);
     }
 
+    public List<Sock> findAll() {
+        return repository.findAll();
+    }
 }
