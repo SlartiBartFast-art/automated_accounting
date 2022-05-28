@@ -29,11 +29,11 @@ ______________________________________________
 
 Docker образ приложения, Вы можете скачать по ссылке:
 
- https://hub.docker.com/r/slartibartfastart/automated
+https://hub.docker.com/r/slartibartfastart/automated-accounting
 
  или To pull image from repository:
 
-docker pull slartibartfastart/automated:latest
+docker pull slartibartfastart/automated-accounting
 
 ------------
 Что необходимо сделать:
