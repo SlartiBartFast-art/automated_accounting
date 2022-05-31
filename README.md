@@ -4,7 +4,7 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/SlartiBartFast-art/automated_accounting?logo=java&logoColor=red&style=plastic)
 ![GitHub last commit](https://img.shields.io/github/last-commit/SlartiBartFast-art/automated_accounting?logo=github&logoColor=red)
 
-app is under development
+app is under development (Path 2 accounting_consumer)
 
 Приложение для автоматизации учёта товаров на складе магазина. 
 
