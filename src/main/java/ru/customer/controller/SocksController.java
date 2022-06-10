@@ -1,7 +1,7 @@
 package ru.customer.controller;
 
 import lombok.AllArgsConstructor;
-import org.apache.commons.lang3.math.NumberUtils;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +20,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -48,7 +47,7 @@ public class SocksController {
      * @param pageSize number of entities per page
      * @param sortBy   sort in ascending or descending order
      * @param sortDir  default as ascending
-     * @return CarResponse entity
+     * @return SockResponse
      */
     @GetMapping("/")
     public SockResponse getAllSocks(
@@ -65,7 +64,7 @@ public class SocksController {
     }
 
     /**
-     * findALL Entity (Sock) in DB, corresponding to the request criteria
+     * FindALL Entity (Sock) in DB, corresponding to the request criteria
      * Возвращает общее количество носков на складе,
      * соответствующих переданным в параметрах критериям запроса.
      *
@@ -136,9 +135,10 @@ public class SocksController {
     }
 
     /**
-     * Регистрирует отпуск Entity(носков) со склада.
+     * Регистрирует отпуск Entity(товара) со склада.
      * Здесь параметры и результаты аналогичные,
-     * но общее количество носков указанного цвета и состава не увеличивается, а уменьшается.
+     * но общее количество носков указанного цвета и состава не увеличивается,
+     * а уменьшается.
      *
      * @param sock SockDto Object
      * @return ResponseEntity<Sock>

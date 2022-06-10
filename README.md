@@ -1,15 +1,16 @@
-## Учет непродовольственных товаров на складе
+## The application "Accounting for goods"
+
 
 [![Build Status](https://app.travis-ci.com/SlartiBartFast-art/automated_accounting.svg?branch=master)](https://app.travis-ci.com/SlartiBartFast-art/automated_accounting)
 ![GitHub top language](https://img.shields.io/github/languages/top/SlartiBartFast-art/automated_accounting?logo=java&logoColor=red&style=plastic)
 ![GitHub last commit](https://img.shields.io/github/last-commit/SlartiBartFast-art/automated_accounting?logo=github&logoColor=red)
 
-app is under development (Path 2 accounting_consumer)
+app is under development (Client path 2 accounting_consumer)
 
-Приложение для автоматизации учёта товаров на складе магазина. 
+Приложение для автоматизации учёта товаров на складе магазина.
 
 Приложение использует REST API архитектуру
-развернуто в облаке(Heroku)
+развернуто в облаке(Heroku), свежая версия всегда в docker
 
         - https://automated-accounting.herokuapp.com/
 
@@ -36,7 +37,7 @@ https://hub.docker.com/r/slartibartfastart/automated-accounting
 docker pull slartibartfastart/automated-accounting
 
 ------------
-Что необходимо сделать:
+Необходимо:
 
 Реализовать приложение для автоматизации учёта носков на складе магазина.
 
@@ -44,7 +45,7 @@ docker pull slartibartfastart/automated-accounting
 _____________
 -  учесть приход и отпуск носков;
 -  узнать общее количество носков определенного цвета и состава в данный момент времени.
-Внешний интерфейс приложения представлен в виде HTTP API (REST, если хочется).
+Внешний интерфейс приложения представлен в виде HTTP API (REST).
    
    Параметры запроса передаются в URL:
 
@@ -58,7 +59,8 @@ _____________
 -  HTTP 400 — параметры запроса отсутствуют или имеют некорректный формат;
 -  HTTP 500 — произошла ошибка, не зависящая от вызывающей стороны (например, база данных недоступна).
 
-Для хранения данных системы можно использовать любую реляционную базу данных. Схему БД желательно хранить в репозитории в любом удобном виде.
+Для хранения данных системы можно использовать любую реляционную базу данных.
+Схему БД желательно хранить в репозитории в любом удобном виде.
 
 Как это сделать:
 
