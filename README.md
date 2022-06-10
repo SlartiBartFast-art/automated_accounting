@@ -5,17 +5,20 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/SlartiBartFast-art/automated_accounting?logo=java&logoColor=red&style=plastic)
 ![GitHub last commit](https://img.shields.io/github/last-commit/SlartiBartFast-art/automated_accounting?logo=github&logoColor=red)
 
-app is under development (Client path 2 accounting_consumer)
+Path 1 - Приложение для автоматизации учёта товаров на складе магазина.
 
-Приложение для автоматизации учёта товаров на складе магазина.
+Path 2 - app is under development (Client path 2 accounting_consumer) 
 
-Приложение использует REST API архитектуру
+      - https://github.com/SlartiBartFast-art/accountiong_consumer
+
+______________________________________________
+   Приложение использует REST API архитектуру
 развернуто в облаке(Heroku), свежая версия всегда в docker
 
         - https://automated-accounting.herokuapp.com/
 
   Used technology stack:
-______________________________________________
+
 - Java Core
 - JWT
 - Spring Boot (Web, Data JPA) 
@@ -62,12 +65,12 @@ _____________
 Для хранения данных системы можно использовать любую реляционную базу данных.
 Схему БД желательно хранить в репозитории в любом удобном виде.
 
-Как это сделать:
+:
 
 -  написано на языке Java;
 -  standalone - состоять из одного выполняемого компонента верхнего уровня;
 -  headless - без UI;
--  оформлено как репозиторий.
+-  оформлено как репозиторий;
 -  приложение будет основано на Spring(Boot) Framework;
 -  для версионирования схемы базы данных будет использоваться Liquibase или Flyway;
 -  приложение будет развернуто на любом облачном сервисе, например Heroku, и его API будет доступно для вызова.
@@ -86,7 +89,7 @@ Entity (Color)
 
 GET /sock/
 
-вывод страниц согласно условиям пагинации и сортировки.
+Вывод страниц согласно условиям пагинации и сортировки.
 
 http://localhost:8080/sock/?pageSize=5
 
